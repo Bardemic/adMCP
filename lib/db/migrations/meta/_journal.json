@@ -8,6 +8,13 @@
       "when": 1760714203462,
       "tag": "0000_chief_squirrel_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1760717800116,
+      "tag": "0001_huge_miracleman",
+      "breakpoints": true
     }
   ]
 }
