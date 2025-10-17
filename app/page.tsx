@@ -1,14 +1,13 @@
-import { router, createContext } from '@/lib/server/trpc';
-import { GreetingCard } from './components/GreetingCard';
+import { SignInWithGithub } from './components/SignInWithGithub';
 
 export default async function Home() {
-  const context = await createContext({ session: null });
-  const data = await router.createCaller(context).hello();
-
   return (
-    <main>
-      <h1>Backend Response</h1>
-      <GreetingCard greeting={data.greeting} timestamp={data.timestamp} />
+    <main className="center-screen">
+      <div className="container">
+        <h1 className="title">Welcome</h1>
+        <p className="subtitle">Sign in to continue</p>
+        <SignInWithGithub />
+      </div>
     </main>
   );
 }
