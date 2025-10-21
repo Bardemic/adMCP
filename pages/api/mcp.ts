@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { server } from '@/lib/server/mcp';
 import { auth } from '@/lib/server/auth';
+import { requestContext } from '@/lib/server/requestContext';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -34,6 +35,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     transport.close();
   });
 
+  const userId = mcpSession.userId;
+
   await server.connect(transport);
-  await transport.handleRequest(req as any, res as any, req.body);
+  await requestContext.run({ userId }, async () => {
+    await transport.handleRequest(req, res, req.body);
+  });
 }

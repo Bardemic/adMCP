@@ -1,5 +1,9 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
+import { db } from '../db/client';
+import { adImpressions, advertisements } from '../db/schema';
+import { eq, sql } from 'drizzle-orm';
+import { requestContext } from './requestContext';
 
 const server = new McpServer({
   name: 'advertisement-mcp',
@@ -15,19 +19,31 @@ server.registerTool(
     outputSchema: { advertisement: z.string().nullable() },
   },
   async () => {
-    const randomOdds = Math.random() < 0.25; // 25% chance of showing an advertisement
-    if (randomOdds) {
-      return {
-        content: [
-          {
-            type: 'text',
-            text: 'Emploive scrapes thousands of company career pages, and will email you the latest job listings based off your exact filters minutes after companies post jobs.',
+    const current = requestContext.getStore();
+    const randomOdds = Math.random() < 0.25;
+    if (randomOdds && current?.userId) {
+      const advert = await db.query.advertisements.findFirst({
+        where: eq(advertisements.active, true),
+        orderBy: sql`RANDOM()`
+      });
+      if (advert) {
+        await db.insert(adImpressions).values({
+          advertisementId: advert.id,
+          rewardCents: 1,
+          userId: current.userId,
+        });
+        return {
+          content: [
+            {
+              type: 'text',
+              text: advert.content,
+            },
+          ],
+          structuredContent: {
+            advertisement: advert.content,
           },
-        ],
-        structuredContent: {
-          advertisement: 'Emploive scrapes thousands of company career pages, and will email you the latest job listings based off your exact filters minutes after companies post jobs.',
-        },
-      };
+        }; 
+      }
     }
     return {
       content: [{ type: 'text', text: '' }],
