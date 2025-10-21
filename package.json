@@ -9,7 +9,9 @@
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
-    "db:migrate": "npx drizzle-kit migrate"
+    "db:migrate": "npx drizzle-kit migrate",
+    "auth:migrate": "npx @better-auth/cli migrate",
+    "auth:generate": "npx @better-auth/cli generate"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.20.0",
