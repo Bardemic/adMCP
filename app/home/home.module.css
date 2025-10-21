@@ -1,0 +1,44 @@
+.centerScreen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.userRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar {
+  border-radius: 9999px;
+}
+
+.signOutWrap {
+  margin-top: 1.5rem;
+}
+
+.email {
+  margin-top: 4px;
+}
+
+.recentlyViewed {
+    width: 200px;
+}
+

@@ -8,6 +8,13 @@
       "when": 1761022260688,
       "tag": "0000_careful_omega_sentinel",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1761029382344,
+      "tag": "0001_loving_dust",
+      "breakpoints": true
     }
   ]
 }

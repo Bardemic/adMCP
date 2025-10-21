@@ -1,4 +1,5 @@
 import { pgTable, text, serial, timestamp, boolean, pgSchema, integer, foreignKey } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
 
 export const advertisements = pgTable('advertisements', {
   id: serial('id').primaryKey(),
@@ -16,14 +17,7 @@ export const adImpressions = pgTable('ad_impressions', {
   userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   rewardCents: integer('reward_cents').notNull(),
-}, (table) => [
-  foreignKey({ name: "advertisement_fk", columns: [table.advertisementId], foreignColumns: [advertisements.id] }),
-  foreignKey({ name: "user_fk", columns: [table.userId], foreignColumns: [users.id] }),
-]);
-
-
-
-
+});
 
 
 
@@ -129,3 +123,18 @@ export const oauthConsent = auth.table('oauth_consent', {
   updatedAt: timestamp('updated_at'),
   consentGiven: boolean('consent_given'),
 });
+
+export const adImpressionsRelations = relations(adImpressions, ({ one }) => ({
+  advertisement: one(advertisements, {
+    fields: [adImpressions.advertisementId],
+    references: [advertisements.id],
+  }),
+  user: one(users, {
+    fields: [adImpressions.userId],
+    references: [users.id],
+  }),
+}));
+
+export const advertisementsRelations = relations(advertisements, ({ many }) => ({
+  adImpressions: many(adImpressions),
+}));

@@ -15,7 +15,7 @@ export function SignInWithGithub() {
     try {
       await authClient.signIn.social({
         provider: "github",
-        callbackURL: "/github",
+        callbackURL: "/home",
         errorCallbackURL: "/",
       });
     } catch (err) {

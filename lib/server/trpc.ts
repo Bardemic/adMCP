@@ -1,6 +1,9 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { auth } from './auth';
+import { db } from '../db/client';
+import { adImpressions } from '../db/schema';
+import { eq } from 'drizzle-orm';
 
 export const createContext = async ({
   session,
@@ -22,7 +25,11 @@ const isAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.user) {
     throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
-  return next();
+  return next({
+    ctx: {
+      user: ctx.user,
+    },
+  });
 });
 
 export const protectedProcedure = t.procedure.use(isAuthed);
@@ -36,6 +43,16 @@ export const router = t.router({
         timestamp: new Date().toISOString(),
       };
     }),
+    recentImpressions: protectedProcedure.query(async ({ ctx }) => {
+      const impressions = await db.query.adImpressions.findMany({
+        where: eq(adImpressions.userId, ctx.user.id),
+        limit: 5,
+        with: {
+          advertisement: true,
+        },
+      });
+      return impressions;
+    })
 });
 
 export type AppRouter = typeof router;

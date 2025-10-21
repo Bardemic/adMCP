@@ -1,0 +1,16 @@
+.card {
+    padding: 12px;
+    border: 2px white solid;
+}
+
+.header {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.subHeader {
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+}
