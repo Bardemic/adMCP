@@ -3,42 +3,89 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* colorful gradient background */
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(255,200,200,0.12), transparent),
+              radial-gradient(1000px 500px at 90% 90%, rgba(200,230,255,0.12), transparent),
+              linear-gradient(135deg, #fff7fb 0%, #f0fbff 100%);
 }
 
 .container {
   text-align: center;
-  padding: 2rem;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(16,24,40,0.08);
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(250,250,255,0.75));
+  max-width: 760px;
+  width: 100%;
 }
 
 .title {
-  font-size: 2rem;
-  margin-bottom: 1.25rem;
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  background: linear-gradient(90deg,#ff6a88,#ffc371,#7ee8fa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .subtitle {
   color: var(--muted);
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
 }
 
 .userRow {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));
+  box-shadow: 0 6px 18px rgba(20,30,60,0.06);
 }
 
 .avatar {
   border-radius: 9999px;
+  border: 2px solid rgba(255,255,255,0.7);
 }
 
 .signOutWrap {
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
 }
 
 .email {
   margin-top: 4px;
+  color: #475569;
 }
 
 .recentlyViewed {
-    width: 200px;
+  width: 260px;
+  margin-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
+.recentCard {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.08);
+}
+
+.recentCard.pink { background: linear-gradient(90deg,#ff758c,#ff7eb3); }
+.recentCard.blue { background: linear-gradient(90deg,#66a6ff,#89f7fe); }
+.recentCard.green { background: linear-gradient(90deg,#9be15d,#00e3ae); }
+.recentCard.purple { background: linear-gradient(90deg,#a18cd1,#fbc2eb); }
+
+/* layout tweaks */
+@media (min-width: 900px) {
+  .centerScreen { padding: 3rem; }
+  .container { display: inline-block; }
+}
+
+/* make overall layout flex with recentlyViewed to the left */
+.centerScreen > .recentlyViewed + .container {
+  margin-left: 2rem;
+}

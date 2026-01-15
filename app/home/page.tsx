@@ -14,19 +14,23 @@ export default async function HomePage() {
   const context = await createContext({ session });
   const recentImpressions = await router.createCaller(context).recentImpressions();
 
+  const colors = ['pink', 'blue', 'green', 'purple'];
+
   return (
     <main className={styles.centerScreen}>
       <div className={styles.recentlyViewed}>
-        {recentImpressions.map((impression) => {
+        {recentImpressions.map((impression, idx) => {
+          const color = colors[idx % colors.length];
           return (
-            <AdImpression
-              key={impression.id}
-              impression={{
-                created_at: impression.createdAt,
-                reward_cents: impression.rewardCents,
-                ad_title: impression.advertisement.title,
-              }}
-            />
+            <div key={impression.id} className={`${styles.recentCard} ${styles[color]}`}>
+              <AdImpression
+                impression={{
+                  created_at: impression.createdAt,
+                  reward_cents: impression.rewardCents,
+                  ad_title: impression.advertisement.title,
+                }}
+              />
+            </div>
           )
         })}
       </div>
@@ -54,5 +58,3 @@ export default async function HomePage() {
     </main>
   );
 }
-
-
